@@ -1,59 +1,51 @@
-## Introduction
+Click on the **View tool** in the Scene view (the hand icon) and drag the view until you are positioned behind the ball.
 
-Add project description here. What will learners be making? Broadly what skills will they be learning?
+Go to the Hierarchy window. Right-click on the 'Main Camera' and select **Align With View**. 
 
-### What you will make
+Go to the Inspector window for the 'Main Camera' and click on the **Add Component** button. Create a new script called `CameraController`.
 
---- no-print ---
-Add instructions for interacting with the embedded content here.
+Open the `CameraController` script and enter the following code:
 
-<div class="scratch-preview">
-  <iframe allowtransparency="true" width="485" height="402" src="https://scratch.mit.edu/projects/embed/160619869/?autostart=false" frameborder="0"></iframe>
-</div>
---- /no-print ---
-
---- print-only ---
-![Complete project](images/showcase_static.png)
---- /print-only ---
-
---- collapse ---
+--- code ---
 ---
-title: What you will need
----
-### Hardware
-
-+ A computer or tablet capable of running Scratch 3
-
-### Software
-
-+ Scratch 3 (either [online](https://scratch.mit.edu/){:target="_blank"} or [offline](https://scratch.mit.edu/download){:target="_blank"})
-+ Python 3
-+ This project can be completed in a web browser using [trinket.io](https://trinket.io/)
-
-### Downloads
-
-+ Download the project [starter file](https://rpf.io/p/en/projectName-go){:target="_blank"} if working offline
-
---- /collapse ---
-
---- collapse ---
----
-title: What you will learn
+language: cs
+filename: CameraController.cs
+line_numbers: true
+line_number_start: 1
+line_highlights: 
 ---
 
-+ Learning objective 1
-+ Learning objective 2
-+ Learning objective 3
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
---- /collapse ---
+public class CameraController : MonoBehaviour
+{
+  public float sensitivity = 5f;
+  public GameObject ball;
+  private Vector3 prevBallPos;
 
---- collapse ---
----
-title: Additional information for educators
----
+  void Start()
+   {
+       // Calculate where the camera is in relation to the player (ball)
+       transform.LookAt(ball.transform);
+       prevBallPos = ball.transform.position;
+   }
 
-You can download the completed project [here](https://rpf.io/p/en/projectName-get){:target="_blank"}.
+void LateUpdate()
+   {
+       float mouse = Input.GetAxis("Mouse Y");
+       transform.Rotate(new Vector3(mouse * sensitivity * -1, 0, 0));
+       float look = Input.GetAxis("Mouse X") * sensitivity;
+       transform.RotateAround(ball.transform.position, Vector3.up, look);
+       // Moves the camera by the same amount the ball has moved
+       transform.Translate(ball.transform.position - prevBallPos, Space.World);
+       prevBallPos = ball.transform.position;
+   }
+}
 
-If you need to print this project, please use the [printer-friendly version](https://projects.raspberrypi.org/en/projects/projectName/print){:target="_blank"}.
+--- /code ---
 
---- /collapse ---
+**Save** and return to Unity.
+
+With the 'Main Camera' selected, drag the `Ball` GameObject to the `Ball` variable in the Inspector window inside your `CameraController` script.
