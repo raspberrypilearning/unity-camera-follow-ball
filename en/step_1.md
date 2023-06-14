@@ -1,4 +1,4 @@
-If you want your camera to follow the Ball, select the 'Main Camera' GameObject in the Hierarchy window and add the `CameraFollow` script component.
+If you want your camera to follow the ball, select the 'Main Camera' GameObject in the Hierarchy window and add the `CameraFollow` script component.
 
 --- collapse ---
 
@@ -8,7 +8,7 @@ title: I don't have a CameraFollow script
 
 With 'Main Camera' selected, add a new script component called `CameraFollow`. 
 
-Drag the new script file from your Assets into the 'Scripts' folder to organise your files. 
+Drag the new script file from your Assets into the Scripts folder to organise your files. 
 
 Open the new script in your code editor. Type out or copy and paste the following code: 
 
